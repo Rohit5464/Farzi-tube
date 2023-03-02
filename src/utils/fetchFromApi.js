@@ -1,20 +1,18 @@
-import axios from 'axios';
+import axios from "axios";
 
-const BASE_URL= process.env.REACT_APP_BASE_URL;
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const options = {
   params: {
-    maxResults: '50'
+    maxResults: "50",
   },
   headers: {
-    'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
-    // 'X-RapidAPI-Host': 'youtube-v31.p.rapidapi.com'
-  }
+    "X-RapidAPI-Key": process.env.REACT_APP_API_KEY,
+  },
 };
 
+export const fetchFromApi = async (url) => {
+  const { data } = await axios.get(`${BASE_URL}/${url}`, options);
 
-export const fetchFromApi = async(url) => {
-    const { data } = await axios.get (`${BASE_URL}/${url}` , options)
-
-    return data;
-}
+  return data;
+};

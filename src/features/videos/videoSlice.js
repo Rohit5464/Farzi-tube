@@ -35,8 +35,7 @@ export const fetchAsyncDetails = createAsyncThunk(
 const initialState = {
     videos: {},
     details: {},
-    selected: "New",
-    isLoading: true
+    selected: "New"
 }
 
 const videoSlice = createSlice({
@@ -46,24 +45,28 @@ const videoSlice = createSlice({
       updateSelected: (state, {payload}) => {
         state.selected = payload;
       },
+      removeVideos: (state) => {
+        state.videos = {};
+      },
+      removeDetails: (state) => {
+        state.details={};
+      }
     },
     extraReducers:{
 
         [fetchAsyncVideos.fulfilled] : (state , {payload}) => {
-            return {...state , videos:payload , isLoading: false}
+            return {...state , videos:payload }
         },
         [fetchAsyncDetails.fulfilled] : (state , {payload}) => {
           return {...state , details:payload.items[0]}
-        },
-        [fetchAsyncDetails.pending] : (state ) => {
-          return {...state , isLoading: true }
         }
       }
     })
 
+export const { removeDetails} = videoSlice.actions;
 export const { updateSelected } = videoSlice.actions;
+export const { removeVideos } = videoSlice.actions;
 export const getAllVideos = (state) => state.videos.videos;
 export const getAllDetails = (state) => state.videos.details;
 export const getSelectCategory = (state) => state.videos.selected
-export const getLoading = (state) => state.videos.isLoading
 export default videoSlice.reducer;

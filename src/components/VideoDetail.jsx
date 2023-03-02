@@ -5,27 +5,32 @@ import ReactPlayer from "react-player";
 import { Typography, Box, Stack } from "@mui/material";
 import { CheckCircle } from "@mui/icons-material";
 import { Videos } from "./";
-import { fetchFromApi } from "../utils/fetchFromApi";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAsyncDetails,
   fetchAsyncVideos,
   getAllDetails,
-  getLoading
+  removeSelected,
+  removeVideos
 } from "../features/videos/videoSlice";
 
 const VideoDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const detail = useSelector(getAllDetails);
-  const isLoading = useSelector(getLoading);
 
   useEffect(() => {
     dispatch(fetchAsyncDetails(`videos?part=snippet,statistics&id=${id}`));
     dispatch(
-      fetchAsyncVideos(`search?part=snippet&relatedToVideoId=${id}&type=video`)
-    );
+      fetchAsyncVideos(`search?part=snippet&relatedToVideoId=${id}&type=video`));
+      return () => {
+        dispatch(removeVideos());
+      };
   }, [id]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <Box minHeight="95vh">
@@ -37,35 +42,48 @@ const VideoDetail = () => {
               className="react-player"
               controls
             />
-            {detail.snippet && <Typography color="#fff" variant="subtitle1" fontWeight="bold" p={2}>
-              {detail.snippet.title}
-            </Typography>}
-            
-            {detail.snippet && (<Stack
-              direction="row"
-              justifyContent="space-between"
-              sx={{ color: "#fff" }}
-              py={1}
-              px={2}
-            >
-              <Link to={`/channel/${detail.snippet.channelId}`}>
-                <Typography color="#fff" variant={{ sm: "subtitle1", md: "h6"}}>
-                  {detail.snippet.channelTitle}
-                  <CheckCircle
-                    sx={{ fontSize: "12px", color: "grey", ml: "5px" }}
-                  />
-                </Typography>
-              </Link>
-              <Stack direction="row" gap="20px" alignItems="center">
-                <Typography variant="body1" sx={{ opacity: 0.7 }}>
-                  {parseInt(detail.statistics.viewCount).toLocaleString()} views
-                </Typography>
-                <Typography variant="body1" sx={{ opacity: 0.7 }}>
-                  {parseInt(detail.statistics.likeCount).toLocaleString()} likes
-                </Typography>
+            {detail.snippet && (
+              <Typography
+                color="#fff"
+                variant="subtitle1"
+                fontWeight="bold"
+                p={2}
+              >
+                {detail.snippet.title}
+              </Typography>
+            )}
+
+            {detail.snippet && (
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                sx={{ color: "#fff" }}
+                py={1}
+                px={2}
+              >
+                <Link to={`/channel/${detail.snippet.channelId}`}>
+                  <Typography
+                    color="#fff"
+                    variant={{ sm: "subtitle1", md: "h6" }}
+                  >
+                    {detail.snippet.channelTitle}
+                    <CheckCircle
+                      sx={{ fontSize: "12px", color: "grey", ml: "5px" }}
+                    />
+                  </Typography>
+                </Link>
+                <Stack direction="row" gap="20px" alignItems="center">
+                  <Typography variant="body1" sx={{ opacity: 0.7 }}>
+                    {parseInt(detail.statistics.viewCount).toLocaleString()}{" "}
+                    views
+                  </Typography>
+                  <Typography variant="body1" sx={{ opacity: 0.7 }}>
+                    {parseInt(detail.statistics.likeCount).toLocaleString()}{" "}
+                    likes
+                  </Typography>
+                </Stack>
               </Stack>
-            </Stack>)}
-            
+            )}
           </Box>
         </Box>
         <Box
@@ -74,7 +92,7 @@ const VideoDetail = () => {
           justifyContent="center"
           alignItems="center"
         >
-          <Videos direction='column'/>
+          <Videos direction="column" />
         </Box>
       </Stack>
     </Box>
