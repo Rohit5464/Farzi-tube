@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL= 'https://youtube-v31.p.rapidapi.com';
+const BASE_URL= process.env.REACT_APP_BASE_URL;
 
 const options = {
   params: {
