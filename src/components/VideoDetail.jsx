@@ -29,7 +29,6 @@ const VideoDetail = () => {
 
   return (
     <Box minHeight="95vh">
-      {isLoading ? <div style={{color: "white" , textAlign: 'center'}}>loading...</div> : (
       <Stack direction={{ xs: "column", md: "row" }}>
         <Box flex={1}>
           <Box sx={{ width: "100%", position: "sticky", top: "90px" }}>
@@ -38,10 +37,11 @@ const VideoDetail = () => {
               className="react-player"
               controls
             />
-            <Typography color="#fff" variant="subtitle1" fontWeight="bold" p={2}>
+            {detail.snippet && <Typography color="#fff" variant="subtitle1" fontWeight="bold" p={2}>
               {detail.snippet.title}
-            </Typography>
-            <Stack
+            </Typography>}
+            
+            {detail.snippet && (<Stack
               direction="row"
               justifyContent="space-between"
               sx={{ color: "#fff" }}
@@ -64,7 +64,8 @@ const VideoDetail = () => {
                   {parseInt(detail.statistics.likeCount).toLocaleString()} likes
                 </Typography>
               </Stack>
-            </Stack>
+            </Stack>)}
+            
           </Box>
         </Box>
         <Box
@@ -76,7 +77,6 @@ const VideoDetail = () => {
           <Videos direction='column'/>
         </Box>
       </Stack>
-      )}
     </Box>
   );
 };
