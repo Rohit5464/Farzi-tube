@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Stack, colors } from "@mui/material";
+import React from "react";
+import { Stack } from "@mui/material";
 import { categories } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import {

@@ -2,10 +2,9 @@ import React from "react";
 import { useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import Videos from "./Videos";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchAsyncVideos, removeVideos } from "../features/videos/videoSlice";
+import { useDispatch } from "react-redux";
+import { fetchAsyncVideos } from "../features/videos/videoSlice";
 import { useParams } from "react-router-dom";
-import VideoCard from "./VideoCard";
 
 const SearchFeed = () => {
   const dispatch = useDispatch();
@@ -13,10 +12,7 @@ const SearchFeed = () => {
 
   useEffect(() => {
     dispatch(fetchAsyncVideos(`search?part=snippet&q=${searchTerm}`));
-    return () => {
-      dispatch(removeVideos());
-    };
-  }, [searchTerm]);
+  }, [searchTerm, dispatch]);
   return (
     <Box p={2} sx={{ overflowY: "auto", height: "90vh", flex: 2 }}>
       <Typography variant="h4" fontWeight="bold" mb={2} sx={{ color: "white" }}>

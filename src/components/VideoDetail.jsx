@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import ReactPlayer from "react-player";
 import { Typography, Box, Stack } from "@mui/material";
@@ -10,8 +10,6 @@ import {
   fetchAsyncDetails,
   fetchAsyncVideos,
   getAllDetails,
-  removeSelected,
-  removeVideos
 } from "../features/videos/videoSlice";
 
 const VideoDetail = () => {
@@ -22,15 +20,13 @@ const VideoDetail = () => {
   useEffect(() => {
     dispatch(fetchAsyncDetails(`videos?part=snippet,statistics&id=${id}`));
     dispatch(
-      fetchAsyncVideos(`search?part=snippet&relatedToVideoId=${id}&type=video`));
-      return () => {
-        dispatch(removeVideos());
-      };
-  }, [id]);
+      fetchAsyncVideos(`search?part=snippet&relatedToVideoId=${id}&type=video`)
+    );
+  }, [id, dispatch]);
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <Box minHeight="95vh">

@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Box } from "@mui/material";
 import { Videos, ChannelCard } from "./";
@@ -8,7 +8,6 @@ import {
   fetchAsyncDetails,
   fetchAsyncVideos,
   getAllDetails,
-  getAllVideos,
   removeDetails,
   removeVideos,
 } from "../features/videos/videoSlice";
@@ -26,11 +25,11 @@ const ChannelDetail = () => {
       dispatch(removeVideos());
       dispatch(removeDetails());
     };
-  }, [id]);
+  }, [id, dispatch]);
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <Box minHeight="95vh">
       <Box>

@@ -20,10 +20,10 @@ const Feed = () => {
     return () => {
       dispatch(removeVideos());
     };
-  }, [selectedCategory]);
+  }, [selectedCategory, dispatch]);
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <Stack sx={{ flexDirection: { sx: "column", md: "row" } }}>
       <Box

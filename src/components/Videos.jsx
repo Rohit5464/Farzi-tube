@@ -8,8 +8,8 @@ import { getAllVideos } from "../features/videos/videoSlice";
 const Videos = ({ direction }) => {
   const videos = useSelector(getAllVideos);
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
   return (
     videos.items != null && (
       <Stack
