@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import Videos from "./Videos";
 import { useDispatch } from "react-redux";
-import { fetchAsyncVideos } from "../features/videos/videoSlice";
+import { fetchAsyncVideos, removeVideos } from "../features/videos/videoSlice";
 import { useParams } from "react-router-dom";
 
 const SearchFeed = () => {
@@ -12,6 +12,9 @@ const SearchFeed = () => {
 
   useEffect(() => {
     dispatch(fetchAsyncVideos(`search?part=snippet&q=${searchTerm}`));
+    return () => {
+      dispatch(removeVideos());
+    };
   }, [searchTerm, dispatch]);
   return (
     <Box p={2} sx={{ overflowY: "auto", height: "90vh", flex: 2 }}>
